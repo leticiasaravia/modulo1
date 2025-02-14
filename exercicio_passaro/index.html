@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <title>Exercício do Pássaro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;  
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+var config = {
+    type: Phaser.AUTO, 
+    width: 800, // Largura 
+    height: 600, // Altura
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+var game = new Phaser.Game(config);
+var passarinho; // Variável do pássaro
+
+function preload() {
+    this.load.image('bg', 'assets/bg_space.png'); // Carrega o fundo
+    this.load.spritesheet('bird', 'assets/bird-green.png', { frameWidth: 75, frameHeight: 75 }); // Carrega o sprite do pássaro
+}
+
+function create() {
+    // Adiciona o fundo do jogo
+    this.add.image(400, 300, 'bg').setScale(1.2);
+
+    // passarinho na posição inicial
+    passarinho = this.add.sprite(100, 300, 'bird').setScale(1.3);
+
+    // Variáveis da movimentação
+    passarinho.ida = true;   // Define o sentido inicial no eixo X 
+    passarinho.subindo = true; // Define o sentido inicial no eixo Y
+
+    // Cria a animação do voo do pássaro
+    this.anims.create({
+        key: 'fly', 
+        frames: this.anims.generateFrameNumbers('bird', { start: 0, end: 7 }),
+        frameRate: 10, // Velocidade da animação
+        repeat: -1 // Faz a animação se repetir infinitamente
+    });
+
+    passarinho.anims.play('fly', true);
+}
+
+function update() {
+    // Movimento no eixo X (horizontal)
+    
+    // Se o pássaro atingir o limite esquerdo (100), ele deve ir para a direita
+    if (passarinho.x <= 100) { 
+        passarinho.setFlip(false, false); 
+        passarinho.ida = true;
+    }
+
+    // Se o pássaro atingir o limite, voltar para a esquerda
+    if (passarinho.x >= 700) {
+        passarinho.setFlip(true, false);
+        passarinho.ida = false;
+    }
+
+    // Movimenta o pássaro no eixo X
+    if (passarinho.ida) {
+        passarinho.x += 5; // Move para a direita
+    } else {
+        passarinho.x -= 5; // Move para a esquerda
+    }
+
+    // Movimento no eixo Y 
+
+    // Se o pássaro atingir o topo (200), descer
+    if (passarinho.y <= 200) {
+        passarinho.subindo = false;
+    }
+
+    // Se o pássaro atingir a parte inferior (500), subir
+    if (passarinho.y >= 500) {
+        passarinho.subindo = true;
+    }
+
+    // Movimenta o pássaro no eixo Y
+    if (passarinho.subindo) {
+        passarinho.y -= 3; // Move para cima
+    } else {
+        passarinho.y += 3; // Move para baixo
+    }
+}
+
+</script>
+
+</body>
+</html>
