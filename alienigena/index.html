@@ -82,7 +82,7 @@
             // Adiciona a imagem de fundo
             this.add.image(larguraJogo / 2, alturaJogo / 2, 'background');
 
-            // Adiciona o foguinho do turbo na posição inicial do alien
+            // Add o foguinho do turbo na posição inicial do alien
             fogo = this.add.sprite(0 , 0 , 'turbo_nave');
             fogo.setVisible(false);
 
@@ -97,14 +97,14 @@
             plataforma = this.physics.add.staticImage(larguraJogo/8, alturaJogo/2, 'plataforma_tijolo');
             this.physics.add.collider(alien, plataforma)
 
-            // Add Homem Aranha (Spider-Man)
+            // Add Homem Aranha 
             homem = this.physics.add.sprite(larguraJogo / 2, alturaJogo / 8, 'homem');
             homem.setCollideWorldBounds(true);
 
             // Set the scale of the image
             homem.setScale(0.2, 0.2);
 
-            // Adjust the collision box size if needed
+            // Ajusta colisao
             homem.body.setSize(homem.width * 1, homem.height * 1);
 
             // Add a collider between the alien and Homem Aranha
@@ -174,3 +174,5 @@
     </script>
 </body>
 </html>
+
+
